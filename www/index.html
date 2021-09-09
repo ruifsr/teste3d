@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/style.css" />
+    <script type="module"  src="scripts/three.js"></script>
+    <script type="module" src="scripts/OrbitControls.js"></script>
+    <script type="module" src="scripts/DragControls.js"></script>
+    <script type="module" src="scripts/OBJLoader.js"></script>
+    <script type="module" src="scripts/GLTFLoader.js"></script>
+    <script type="module" src="scripts/MTLLoader.js"></script>
+    <script type="module" src="scripts/DRACOLoader.js"></script>
+    <script type="module" src="scripts/animation/AnimationMixer.js"></script>
+    <script type="module" src="scripts/script.js"></script>
+</head>
+<body>
+    <h1>Teste2</h1>
+    <input type="button" id="btnMoveObj" value="Move Obj">
+    <input type="button" id="btnMoveCam" value="Move Cam">
+    &nbsp;&nbsp;
+    X <input type="range" min="0" max="200" value="100" class="slider" id="myRangeX"> &nbsp;
+    Y <input type="range" min="0" max="200" value="100" class="slider" id="myRangeY"> &nbsp;
+    Z <input type="range" min="0" max="200" value="100" class="slider" id="myRangeZ">
+    <input type="button" id="btnResize" value="resize">
+    <canvas id="c"></canvas>  
+</body>
+</html>

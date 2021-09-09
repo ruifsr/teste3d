@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+#c {
+
+  display: block;
+}
+
+input[type=text] {
+width:20px;
+}
