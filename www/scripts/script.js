@@ -136,6 +136,24 @@ function main() {
         gltfStore.mixer.clipAction(object.animations[0]).play();
       });
 
+      //rotation
+      const pickPosition = {x: 100000, y: 100000}; //distant positions for start
+
+      window.addEventListener('click', (event)=>{    
+        const pos = getCanvasRelativePosition(event);        // setPickPosition
+        pickPosition.x = (pos.x / canvas.width ) *  2 - 1;
+        pickPosition.y = (pos.y / canvas.height) * -2 + 1;  // note we flip Y
+        pickHelper.pick(pos,pickPosition, scene, camera);
+      });
+    
+      function getCanvasRelativePosition(event) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: (event.clientX - rect.left) * canvas.width  / rect.width,
+          y: (event.clientY - rect.top ) * canvas.height / rect.height,
+        };
+      }
+
     //gameLogic
     function update(){
       //cube.rotation.x+=0.01;
@@ -157,6 +175,95 @@ function main() {
     }
     gameLoop();
 }
+
+function rand(min, max) {
+  if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+  return min + (max - min) * Math.random();
+}
+
+//------------------
+
+class PickHelper {
+  constructor() {
+    this.raycaster = new THREE.Raycaster();
+    this.pickedObject = null;
+    this.pickedObjectSavedColor = 0;
+  }
+  get PickedObject(){return this.pickedObject;}
+  set PickedObject(value){this.pickedObject=value;}
+  pick(positions, normalizedPosition, scene, camera) {
+    var self=this;
+    // cast a ray through the frustum
+    this.raycaster.setFromCamera(normalizedPosition, camera);
+    // get the list of objects the ray intersected
+    const intersectedObjects = this.raycaster.intersectObjects(scene.children);
+    //escape 27//left = 37//up = 38//right = 39//down = 40//escape event 25
+    function keysHandler(ev) {
+      ev = ev || window.event;
+      if (ev.keyCode == 27) {
+        self.pickedObject = null; 
+        deleteArrows();
+        document.removeEventListener("keydown", keysHandler);
+      } else if (ev.keyCode == 37) { self.pickedObject.rotation.y+=0.2;
+      } else if (ev.keyCode == 38) { self.pickedObject.rotation.x-=0.2;
+      } else if (ev.keyCode == 39) { self.pickedObject.rotation.y-=0.2;
+      } else if (ev.keyCode == 40) { self.pickedObject.rotation.x+=0.2;
+    }}
+    
+    if (this.pickedObject && !intersectedObjects.length) {
+      this.pickedObject = null;
+      deleteArrows();     
+      document.removeEventListener("keydown", keysHandler);
+      return;
+    }
+
+    if (intersectedObjects.length && !this.pickedObject) {
+      // pick the first object. It's the closest one
+      this.pickedObject = intersectedObjects[0].object;
+      //load arrows here
+      addImg(positions.x,positions.y-30,'images/upArrow.png',this.pickedObject,keysHandler)//up
+      addImg(positions.x+30,positions.y,'images/rightArrow.png',this.pickedObject,keysHandler)//right
+      addImg(positions.x-30,positions.y,'images/leftArrow.png',this.pickedObject,keysHandler)//left
+      addImg(positions.x,positions.y+35,'images/downArrow.png',this.pickedObject,keysHandler)//down
+      addImg(positions.x+40,positions.y-35,'images/close.png',this.pickedObject,keysHandler)//close
+      document.addEventListener("keydown", keysHandler);
+    }
+  }
+}
+
+//-----------------------
+
+function deleteArrows(){
+  let imgsArrows =document.querySelectorAll(".arrow");
+  for (let i = imgsArrows.length - 1; i >= 0; i--)
+    imgsArrows[i].parentNode.removeChild(imgsArrows[i]);
+}
+
+//-------------------------
+
+function addImg(x, y, src, pickedObject, keysHandler) {
+  let img = document.createElement('img');
+  img.className = 'arrow';
+  img.style.top = y + "px" ;
+  img.style.left = x + "px";
+  img.src = src;
+  img.addEventListener('mousedown', ()=>{
+    if(img.src.includes("up")){pickedObject.rotation.x-=0.2;
+    } else if(img.src.includes("right")){ pickedObject.rotation.y-=0.2;
+    } else if(img.src.includes("left")){ pickedObject.rotation.y+=0.2;
+    } else if(img.src.includes("down")){ pickedObject.rotation.x+=0.2;
+    } else {
+      pickHelper.PickedObject=null;
+      deleteArrows();
+      document.removeEventListener("keydown", keysHandler);
+  }});
+  document.getElementById('videoHolderDivId').appendChild(img);
+}
+
+const pickHelper = new PickHelper();
 
 main();
 

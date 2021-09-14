@@ -2,11 +2,33 @@ html, body {
   height: 100%;
   margin: 0;
 }
-#c {
-
-  display: block;
-}
 
 input[type=text] {
 width:20px;
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#c {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+}
+
+#videoHolderDivId{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.arrow{
+  display:block;
+  position:absolute;
 }
