@@ -58,12 +58,12 @@ function main() {
       new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("/images/front.png"), side:THREE.DoubleSide}),
       new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("/images/right.png"), side:THREE.DoubleSide})
     ];
-    //let cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+
     let cube = new THREE.Mesh(geometry,cubeMaterials);
     scene.add(cube);
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    document.getElementById("container").appendChild(renderer.domElement);
 
     window.addEventListener('resize', () => { 
       renderer.setSize(window.innerWidth, window.innerHeight); 
@@ -107,7 +107,7 @@ function main() {
         object.position.y -= 60;
         objects.push(object);
         scene.add(object);
-        scale();
+        //scale();
       });
     });
 
@@ -139,7 +139,7 @@ function main() {
       //rotation
       const pickPosition = {x: 100000, y: 100000}; //distant positions for start
 
-      window.addEventListener('click', (event)=>{    
+      document.getElementById('container').addEventListener('click', (event)=>{    
         const pos = getCanvasRelativePosition(event);        // setPickPosition
         pickPosition.x = (pos.x / canvas.width ) *  2 - 1;
         pickPosition.y = (pos.y / canvas.height) * -2 + 1;  // note we flip Y
