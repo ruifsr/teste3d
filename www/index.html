@@ -18,8 +18,15 @@
 </head>
 <body>
     <h1>Teste2</h1>
-    <input type="button" id="btnMoveObj" value="Move Obj">
-    <input type="button" id="btnMoveCam" value="Move Cam">
+
+    <input type="radio" id="radioMoveObj" name="radio" value="MoveObj">
+    <label for="radioMoveObj">Move Obj</label>
+    <input type="radio" id="radioMoveCam" name="radio" value="MoveCam">
+    <label for="radioMoveCam">Move Cam</label>
+    <input type="radio" id="radioRotate" name="radio" value="MoveRotate">
+    <label for="radioRotate">Rotate Obj</label>
+    <input type="radio" id="radioNone" name="radio" value="None">
+    <label for="radioNone">None</label>
     &nbsp;&nbsp;
     X <input type="range" min="0" max="200" value="100" class="slider" id="myRangeX"> &nbsp;
     Y <input type="range" min="0" max="200" value="100" class="slider" id="myRangeY"> &nbsp;

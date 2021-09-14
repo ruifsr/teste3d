@@ -5,17 +5,35 @@ let objects = [];
 let controlsCam=null;
 let controlsDrag = null;
 
-window.addEventListener('click' , e=> {
+window.addEventListener('change' , e=> {
   switch(e.target.id){
-    case 'btnMoveObj':
+    case 'radioMoveObj':
+      document.getElementById("videoHolderDivId").style.display="none";
       moveObj();
       break;
-    case 'btnMoveCam':
+    case 'radioMoveCam':
+      document.getElementById("videoHolderDivId").style.display="none";
       moveCam();
       break;
+    case 'radioRotate':
+      if(e.target.checked){
+        document.getElementById("videoHolderDivId").style.display="block";
+      } else {
+        document.getElementById("videoHolderDivId").style.display="none";
+      }
+    break;
+    case 'radioNone':
+      document.getElementById("videoHolderDivId").style.display="none";
+    break;
+  }
+});
+
+window.addEventListener('click' , e=> {
+  switch(e.target.id){
     case 'btnResize':
+      document.getElementById("videoHolderDivId").style.display="none";
       scale();
-      break;
+    break;
   }
 });
 
