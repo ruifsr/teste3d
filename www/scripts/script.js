@@ -125,7 +125,7 @@ function main() {
         object.position.y -= 60;
         objects.push(object);
         scene.add(object);
-        //scale();
+        scale();
       });
     });
 
@@ -263,10 +263,11 @@ function deleteArrows(){
 //-------------------------
 
 function addImg(x, y, src, pickedObject, keysHandler) {
+  let fatherNode = document.getElementById('videoHolderDivId')
   let img = document.createElement('img');
   img.className = 'arrow';
-  img.style.top = y + "px" ;
-  img.style.left = x + "px";
+  img.style.top = ((y*100)/fatherNode.clientWidth) + "%";
+  img.style.left = ((x*100)/fatherNode.clientHeight) + "%";
   img.src = src;
   img.addEventListener('mousedown', ()=>{
     if(img.src.includes("up")){pickedObject.rotation.x-=0.2;
@@ -278,10 +279,9 @@ function addImg(x, y, src, pickedObject, keysHandler) {
       deleteArrows();
       document.removeEventListener("keydown", keysHandler);
   }});
-  document.getElementById('videoHolderDivId').appendChild(img);
+  fatherNode.appendChild(img);
 }
 
 const pickHelper = new PickHelper();
-
 main();
 
