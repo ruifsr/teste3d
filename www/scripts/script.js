@@ -257,9 +257,10 @@ function addImg(x, y, src, pickedObject, keysHandler) {
       document.removeEventListener("keydown", keysHandler);
   }});
 
-  window.addEventListener('mouseup', ()=>{
-    clearInterval(interval_); 
-  });
+  //events to stop mouse rotation
+  window.addEventListener('mouseup', ()=>{clearInterval(interval_); });
+  window.addEventListener('dragover', (e)=>{e.preventDefault();}); 
+  window.addEventListener('drop', ()=>{clearInterval(interval_); });
 
   fatherNode.appendChild(img);
 }
