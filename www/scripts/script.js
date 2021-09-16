@@ -245,16 +245,22 @@ function addImg(x, y, src, pickedObject, keysHandler) {
   img.style.top = y+"px";
   img.style.left = x + "px";
   img.src = src;
+  var interval_;
   img.addEventListener('mousedown', ()=>{
-    if(img.src.includes("up")){pickedObject.rotation.x-=0.2;
-    } else if(img.src.includes("right")){ pickedObject.rotation.y-=0.2;
-    } else if(img.src.includes("left")){ pickedObject.rotation.y+=0.2;
-    } else if(img.src.includes("down")){ pickedObject.rotation.x+=0.2;
+    if(img.src.includes("up")){ interval_ = setInterval( function() {pickedObject.rotation.x-=0.2;}, 100);
+    } else if(img.src.includes("right")){ interval_ = setInterval( function() {pickedObject.rotation.y-=0.2;}, 100);
+    } else if(img.src.includes("left")){ interval_ = setInterval( function() {pickedObject.rotation.y+=0.2;}, 100);
+    } else if(img.src.includes("down")){ interval_ = setInterval( function() {pickedObject.rotation.x+=0.2;}, 100);
     } else {
       pickHelper.PickedObject=null;
       deleteArrows();
       document.removeEventListener("keydown", keysHandler);
   }});
+
+  window.addEventListener('mouseup', ()=>{
+    clearInterval(interval_); 
+  });
+
   fatherNode.appendChild(img);
 }
 
