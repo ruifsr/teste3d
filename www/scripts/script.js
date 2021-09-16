@@ -248,8 +248,8 @@ function addImg(x, y, src, pickedObject, keysHandler) {
   var interval_;
   img.addEventListener('mousedown', ()=>{
     if(img.src.includes("up")){ interval_ = setInterval( function() {pickedObject.rotation.x-=0.2;}, 100);
-    } else if(img.src.includes("right")){ interval_ = setInterval( function() {pickedObject.rotation.y-=0.2;}, 100);
-    } else if(img.src.includes("left")){ interval_ = setInterval( function() {pickedObject.rotation.y+=0.2;}, 100);
+    } else if(img.src.includes("right")){ interval_ = setInterval( function() {pickedObject.rotation.y+=0.2;}, 100);
+    } else if(img.src.includes("left")){ interval_ = setInterval( function() {pickedObject.rotation.y-=0.2;}, 100);
     } else if(img.src.includes("down")){ interval_ = setInterval( function() {pickedObject.rotation.x+=0.2;}, 100);
     } else {
       pickHelper.PickedObject=null;
@@ -273,26 +273,27 @@ function keysHandler(ev) {
     pickHelper.pickedObject = null; 
     deleteArrows();
     document.removeEventListener("keydown", keysHandler);
-  } else if (ev.keyCode == 37) { pickHelper.pickedObject.rotation.y+=0.2;
+  } else if (ev.keyCode == 37) { pickHelper.pickedObject.rotation.y-=0.2;
   } else if (ev.keyCode == 38) { pickHelper.pickedObject.rotation.x-=0.2;
-  } else if (ev.keyCode == 39) { pickHelper.pickedObject.rotation.y-=0.2;
+  } else if (ev.keyCode == 39) { pickHelper.pickedObject.rotation.y+=0.2;
   } else if (ev.keyCode == 40) { pickHelper.pickedObject.rotation.x+=0.2;
 }}
 
 //--------------------------------------------------------------------------
 
 function clickRotationHandler(event){ 
+  const divHolder = document.getElementById("videoHolderDivId");
   const pickPosition = {x: 100000, y: 100000}; //distant positions for start   
   const pos = getCanvasRelativePosition(event);        // setPickPosition
-  pickPosition.x = (pos.x / canvas.clientWidth ) *  2 - 1;
-  pickPosition.y = (pos.y / canvas.clientHeight) * -2 + 1;  // note we flip Y
+  pickPosition.x = (pos.x / divHolder.clientWidth ) *  2 - 1;
+  pickPosition.y = (pos.y / divHolder.clientHeight) * -2 + 1;  // note we flip Y
   pickHelper.pick(pos,pickPosition, scene, camera);
 
   function getCanvasRelativePosition(event) {
     const rect = canvas.getBoundingClientRect();
     return {
-      x: (event.clientX - rect.left) * canvas.width  / rect.width,
-      y: (event.clientY - rect.top ) * canvas.height / rect.height,
+      x: (event.clientX - rect.left) * divHolder.clientWidth  / rect.width,
+      y: (event.clientY - rect.top ) * divHolder.clientHeight / rect.height,
     };
   }
 }
