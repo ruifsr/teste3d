@@ -5,6 +5,7 @@ let scene = new THREE.Scene();
 let objects = [];
 let controlsCam=null;
 let controlsDrag = null;
+let render2 = new THREE.CSS3DRenderer();
 
 window.addEventListener('change' , e=> {
   const divHolder = document.getElementById("videoHolderDivId");
